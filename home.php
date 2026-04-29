@@ -1,13 +1,18 @@
 <?php
 session_start();
+include "config/database.php";
 
-// Proteksi halaman
+// Cek login
 if (!isset($_SESSION['user'])) {
     header("Location: login");
     exit();
 }
 
-$user = $_SESSION['user'];
+$username = $_SESSION['user'];
+
+// Ambil data user
+$query = mysqli_query($conn, "SELECT * FROM users WHERE username='$username'");
+$user = mysqli_fetch_assoc($query);
 ?>
 
 <!DOCTYPE html>
@@ -25,26 +30,7 @@ body {
   color: white;
 }
 
-/* HEADER */
-.header {
-  background: #111;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  color: gold;
-  font-weight: bold;
-  font-size: 22px;
-}
-
-.user {
-  font-size: 14px;
-}
-
-/* MENU TOP */
+/* TOP MENU */
 .top-menu {
   display: flex;
   justify-content: space-around;
@@ -74,6 +60,10 @@ body {
   text-align: center;
 }
 
+.category div {
+  font-size: 12px;
+}
+
 /* LIST */
 .list {
   margin: 10px;
@@ -87,49 +77,72 @@ body {
   margin-bottom: 8px;
   font-weight: bold;
 }
+
+/* FOOTER */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #111;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  font-size: 12px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <div class="logo">XD4D</div>
-  <div class="user">👤 <?php echo $user; ?></div>
-</div>
+<!-- HEADER -->
+<?php include "includes/header.php"; ?>
 
+<!-- MENU -->
 <div class="top-menu">
-  <div>Home</div>
-  <div>Deposit</div>
-  <div>Withdraw</div>
-  <div>History</div>
-  <div>APK</div>
+  <div>🏠 Home</div>
+  <div>💰 Deposit</div>
+  <div>📤 Withdraw</div>
+  <div>📜 History</div>
+  <div>📱 APK</div>
 </div>
 
+<!-- USER DATA -->
 <div class="card">
-  <div>User Data</div>
-  <div>Balance: <span class="balance">Rp 295</span></div>
-  <div>Last Login: -</div>
+  <div><b>User Data</b></div>
+  <div>Balance: <span class="balance">Rp <?php echo number_format($user['balance']); ?></span></div>
+  <div>Username: <?php echo $user['username']; ?></div>
 </div>
 
+<!-- REPORT -->
 <div class="card">
-  <div>Last Bet/Win Report</div>
+  <div><b>Last Bet/Win Report</b></div>
   <div>No Data</div>
 </div>
 
+<!-- CATEGORY -->
 <div class="category">
-  <div>Togel</div>
-  <div>Slot</div>
-  <div>Casino</div>
-  <div>Sport</div>
+  <div>🎯 Togel</div>
+  <div>🎰 Slot</div>
+  <div>🎲 Casino</div>
+  <div>⚽ Sport</div>
 </div>
 
+<!-- LIST PASARAN -->
 <div class="list">
   <div class="item">TOTO WUHAN - Tutup: 3 jam</div>
-  <div class="item">HK SIANG - Tutup: 10:30</div>
-  <div class="item">SG METRO - Tutup: 12:30</div>
-  <div class="item">SYDNEY - Tutup: 13:30</div>
-  <div class="item">SINGAPORE - Tutup: 17:20</div>
-  <div class="item">HONGKONG - Tutup: 22:00</div>
+  <div class="item">HK SIANG - Tutup: 10:30 WIB</div>
+  <div class="item">SG METRO - Tutup: 12:30 WIB</div>
+  <div class="item">SYDNEY - Tutup: 13:30 WIB</div>
+  <div class="item">SINGAPORE - Tutup: 17:20 WIB</div>
+  <div class="item">HONGKONG - Tutup: 22:00 WIB</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div>Deposit</div>
+  <div>Withdraw</div>
+  <div>Chat</div>
+  <div>Livechat</div>
 </div>
 
 </body>
