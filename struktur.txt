@@ -1,0 +1,19 @@
+/htdocs
+│
+├── index.php
+├── login.php
+├── register.php
+├── home.php
+├── logout.php
+│
+├── config/
+│   └── database.php
+│
+├── assets/
+│   ├── css/
+│   ├── js/
+│   └── img/
+│
+└── includes/
+    ├── header.php
+    └── footer.php
